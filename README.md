@@ -11,6 +11,8 @@ Menopause
 CA-125
 [In cases of ovarian cancer, serum CA125 level may be elevated, but this marker has a low sensitivity in the early stages of ovarian cancer(only reported to be elevated in 23-50% of stage I cases)
 
+- Early tumors often do not secrete significant levels of CA‑125, especially in younger, BRCA+ populations or non-serous histological types.
+
 - Approximately 20% of EOC patients do not exhibit elevated CA125 levels, ](https://ovarianresearch.biomedcentral.com/articles/10.1186/s13048-019-0503-7?utm_source=chatgpt.com)
 
 [Increased CA125 levels are also reported in other physiological or pathological conditions, such as menstruation, pregnancy, endometriosis and inflammatory diseases of the peritoneu
