@@ -1,24 +1,64 @@
-# lunartech-assignment
+# Ovarian Cancer Synthetic Data Generation for BRCA+ population 
+**Submission:** LunarTech Challenge  
 
-Menopause
-[More than 90% of benign tumors are found in premenopausal patients who have been operated on, whereas in postmenopausal patients only 60% of tumors are benign
+## Project Overview  
+This project simulates a synthetic dataset for ovarian cancer diagnosis modeling, based on domain research and literature-backed distributions. Key clinical factors were modeled to reflect realistic population-level statistics and disease characteristics.
 
+---
 
-- The prevalence of OC among post-menopausal women is estimated to be 1 in 2500
+## Domain Insights  
 
-](https://ovarianresearch.biomedcentral.com/articles/10.1186/s13048-019-0503-7?utm_source=chatgpt.com)
+- **CA-125** is an important diagnostic biomarker but unreliable in early stages, especially in **BRCA+** and younger patients.  
+- **Tumor size** correlates strongly with CA-125; both increase with disease severity.  
+- **USScore**, **CA-125**, and **BRCA status** are the strongest predictors of diagnosis.  
 
-CA-125
-[In cases of ovarian cancer, serum CA125 level may be elevated, but this marker has a low sensitivity in the early stages of ovarian cancer(only reported to be elevated in 23-50% of stage I cases)
+### Diagnosis Generation  
+To avoid overfitting, diagnosis status was fixed at **30% positive**, and biomarker values were modeled **based on diagnosis**, not the reverse.
 
-- Early tumors often do not secrete significant levels of CA‑125, especially in younger, BRCA+ populations or non-serous histological types.
+### Feature Classification  
+- **Risk Factors:** Age, Menopause, BRCA, Family History  
+- **Symptoms:** Tumor Size, USScore  
+- **Biomarker:** CA-125  
 
-- Approximately 20% of EOC patients do not exhibit elevated CA125 levels, ](https://ovarianresearch.biomedcentral.com/articles/10.1186/s13048-019-0503-7?utm_source=chatgpt.com)
+---
 
-[Increased CA125 levels are also reported in other physiological or pathological conditions, such as menstruation, pregnancy, endometriosis and inflammatory diseases of the peritoneu
+## Feature Modeling Summary
 
-- upper limit is 35 U/mL in pre and post-menopausal patients.
+| Feature           | Unit     | Healthy Distribution       | Cancer Distribution              | Notes                                     |
+|------------------|----------|----------------------------|----------------------------------|-------------------------------------------|
+| **Age**          | years    | Normal(50, 10)             | Normal(50, 10)                   | BRCA+ patients tend to be younger         |
+| **CA-125**       | U/mL     | Normal(20, 10)             | TumorSize * 30 + Normal(0, 20)   | Correlated with tumor size                |
+| **Tumor Size**   | cm       | Normal(3, 0.8)             | Normal(6, 1.5)                   | Higher in diagnosed patients              |
+| **BRCA**         | 0 / 1    | Binomial(1, 0.1)           | Binomial(1, 0.2)                 | More prevalent among diagnosed            |
+| **Menopause**    | 0 / 1    | Age-based thresholds       | Age-based thresholds             | Reflects real menopause stats             |
+| **USScore**      | 0–1      | Normal(0.3, 0.15)          | Normal(0.7, 0.15)                | Imaging-based diagnostic score            |
+| **Family History** | 0 / 1  | Binomial(1, 0.15)          | Binomial(1, 0.05)                | Higher risk with family history           |
+| **Diagnosis**    | 0 / 1    | 0                          | 1                                | 30% diagnosed population                  |
 
-- the specificity of CA125 for detecting ovarian cancer was 78% 
+---
 
-](https://ovarianresearch.biomedcentral.com/articles/10.1186/s13048-019-0503-7?utm_source=chatgpt.com)
+## Validation Highlights  
+
+- **Avg Tumor Size:** ~3.1 cm (lower overall due to majority healthy population)  
+- **Avg CA-125:** ~25.6 U/mL (premenopausal), ~37.2 U/mL (postmenopausal)  
+- **Correlations:**  
+  - CA-125 ↔ Tumor Size, USScore (strong)  
+  - BRCA ↔ Age (negative)  
+- **Key diagnostic indicators:** CA-125, Tumor Size, and USScore (CA-125 alone is insufficient)
+
+---
+
+## Literature References  
+
+- BRCA diagnosis age:  
+  - [PubMed](https://pubmed.ncbi.nlm.nih.gov/29793803/)  
+  - [BMC Ovarian Research](https://ovarianresearch.biomedcentral.com/articles/10.1186/s13048-021-00809-w)  
+
+- CA-125 levels:  
+  - [PMC Article 1](https://pmc.ncbi.nlm.nih.gov/articles/PMC10315033/)  
+  - [PMC Article 2](https://pmc.ncbi.nlm.nih.gov/articles/PMC7763876/)  
+
+- Tumor size distribution:  
+  - [PMC Article](https://pmc.ncbi.nlm.nih.gov/articles/PMC2815712/)
+
+---
